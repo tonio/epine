@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gymnase de l'Épine | Cotations</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body x-data="climbApp()" x-init="init()">
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <div class="filter-group">
+      <select id="sel-ouvreur" x-model="ouvreur">
+        <option value="tous">Ouvreur</option>
+        <template x-for="o in ouvreurs" :key="o">
+          <option :value="o" x-text="o"></option>
+        </template>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="sel-min">Min</label>
+      <select id="sel-min" x-model.number="gradeMin">
+        <template x-for="(g, i) in grades" :key="i">
+          <option :value="i" x-text="g"></option>
+        </template>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="sel-max">Max</label>
+      <select id="sel-max" x-model.number="gradeMax">
+        <template x-for="(g, i) in grades" :key="i">
+          <option :value="i" x-text="g" :selected="i === gradeMax"></option>
+        </template>
+      </select>
+    </div>
+
+    <button class="btn-reset" @click="reset()">&#8635;</button>
+  </div>
+
+  <!-- COULOIRS -->
+  <div class="couloirs-wrapper">
+    <div class="couloirs-track">
+      <template x-if="data.couloirs">
+        <template x-for="couloir in data.couloirs" :key="couloir.id">
+          <div class="couloir" @click="openPopin(couloir)">
+            <div class="voies-container">
+              <template x-for="(voie, vi) in couloir.voies" :key="vi">
+                <div
+                  class="voie"
+                  :class="voieClasses(voie, couloir.id, vi)"
+                  :style="voieStyle(voie)"
+                  :title="voie.ouvreur + ' · ' + voie.cotation"
+                >
+                  <span class="voie-grade"
+                        x-text="voie.cotation"
+                        :style="gradeCircleStyle(voie.cotation)"></span>
+                </div>
+              </template>
+            </div>
+            <div class="couloir-num" x-text="couloir.id"></div>
+          </div>
+        </template>
+      </template>
+    </div>
+  </div>
+
+  <!-- Popin couloir -->
+  <div class="popin-overlay"
+       x-show="selectedCouloir"
+       x-cloak
+       @click.self="closePopin()">
+    <div class="popin-content">
+      <div class="popin-header">
+        <strong x-text="'Couloir ' + (selectedCouloir && selectedCouloir.id)"></strong>
+        <button class="popin-close" @click="closePopin()">×</button>
+      </div>
+      <template x-if="selectedCouloir">
+        <div>
+          <template x-for="(voie, vi) in selectedCouloir.voies" :key="vi">
+            <label class="popin-voie-row">
+              <!-- Pastille couleur -->
+              <span class="popin-voie-pastille" :style="voieStyle(voie)"></span>
+              <!-- Infos -->
+              <span class="popin-voie-info">
+                <span class="popin-voie-cotation" x-text="voie.cotation"></span>
+                <span x-text="voie.ouvreur || '?'"></span>
+              </span>
+              <!-- Checkbox réussi -->
+              <input class="popin-voie-check"
+                     type="checkbox"
+                     :checked="isCompleted(selectedCouloir.id, vi)"
+                     @change="toggleCompleted(selectedCouloir.id, vi)">
+            </label>
+          </template>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <script>
+    const COLOR_MAP = {
+      noir:   '#0d0d0d',
+      rouge:  '#ff1f3d',
+      bleu:   '#1e90ff',
+      vert:   '#00cc55',
+      jaune:  '#ffe000',
+      rose:   '#ff2d87',
+      orange: '#ff6600',
+      blanc:  '#f5f5f5',
+      violet: '#9b30ff',
+      gris:   '#b0b0b0',
+    };
+
+    function climbApp() {
+      return {
+        data: {},
+        ouvreur: 'tous',
+        gradeMin: 0,
+        gradeMax: 21,
+        selectedCouloir: null,
+        completed: {},
+
+        async init() {
+          this.completed = Object.fromEntries(
+            Object.keys(localStorage)
+              .filter(k => k.startsWith('voie-') && localStorage.getItem(k) === '1')
+              .map(k => [k, true])
+          );
+          try {
+            const res = await fetch('./routes.json');
+            this.data = await res.json();
+            this.gradeMax = this.data.grades.length - 1;
+          } catch (e) {
+            console.error('Impossible de charger routes.json', e);
+          }
+        },
+
+        get grades() {
+          return this.data.grades || [];
+        },
+
+        get ouvreurs() {
+          if (!this.data.couloirs) return [];
+          const set = new Set();
+          this.data.couloirs.forEach(c =>
+            c.voies.forEach(v => { if (v.ouvreur && v.ouvreur !== '?') set.add(v.ouvreur); })
+          );
+          return [...set].sort((a, b) => a.localeCompare(b, 'fr'));
+        },
+
+        matchesFilter(voie) {
+          const idx = this.grades.indexOf(voie.cotation);
+          const gradeOk = idx >= this.gradeMin && idx <= this.gradeMax;
+          const ouvreurOk = this.ouvreur === 'tous' || voie.ouvreur === this.ouvreur;
+          return gradeOk && ouvreurOk;
+        },
+
+        voieStyle(voie) {
+          const c1 = COLOR_MAP[voie.couleur] || '#888';
+          if (voie.couleur2) {
+            const c2 = COLOR_MAP[voie.couleur2] || '#888';
+            return `background: repeating-linear-gradient(to bottom, ${c1} 0px, ${c1} 20px, ${c2} 20px, ${c2} 40px);`;
+          }
+          return `background: ${c1};`;
+        },
+
+        gradeCircleStyle(cotation) {
+          const level = parseInt(cotation);
+          const colors = { 4: '#dcdcdc', 5: '#9ce15a', 6: '#64b2e0', 7: '#ffe061' };
+          return `background: ${colors[level] || '#888'};`;
+        },
+
+        voieClasses(voie, couloirId, vi) {
+          return {
+            'filtered-out': !this.matchesFilter(voie),
+            [`is-${voie.couleur}`]: true,
+            'is-completed': this.isCompleted(couloirId, vi),
+          };
+        },
+
+        reset() {
+          this.ouvreur = 'tous';
+          this.gradeMin = 0;
+          this.gradeMax = this.grades.length - 1;
+        },
+
+        openPopin(couloir) {
+          this.selectedCouloir = couloir;
+        },
+
+        closePopin() {
+          this.selectedCouloir = null;
+        },
+
+        isCompleted(couloirId, vi) {
+          return !!this.completed[`voie-${couloirId}-${vi}`];
+        },
+
+        toggleCompleted(couloirId, vi) {
+          const key = `voie-${couloirId}-${vi}`;
+          if (this.completed[key]) {
+            delete this.completed[key];
+            localStorage.removeItem(key);
+          } else {
+            this.completed[key] = true;
+            localStorage.setItem(key, '1');
+          }
+        },
+      };
+    }
+  </script>
+</body>
+</html>

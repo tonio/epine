@@ -1,0 +1,315 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --c-noir:   #0d0d0d;
+  --c-rouge:  #ff1f3d;
+  --c-bleu:   #1e90ff;
+  --c-vert:   #00cc55;
+  --c-jaune:  #ffe000;
+  --c-rose:   #ff2d87;
+  --c-orange: #ff6600;
+  --c-blanc:  #f5f5f5;
+  --c-violet: #9b30ff;
+  --c-gris:   #b0b0b0;
+
+  --filter-h: 52px;
+  --voie-w: 14px;
+  --couloir-gap: 18px;
+  --radius: 5px;
+  --font: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background: #181818;
+  color: #eee;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* ── FILTERS ── */
+.filters {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #111;
+  border-bottom: 1px solid #333;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-height: var(--filter-h);
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.filter-group label {
+  font-size: 0.7rem;
+  color: #888;
+  white-space: nowrap;
+}
+
+select {
+  background: #2a2a2a;
+  color: #eee;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 0.78rem;
+  font-family: var(--font);
+  cursor: pointer;
+  appearance: auto;
+}
+
+select:focus {
+  outline: 2px solid #f4831f;
+  outline-offset: 1px;
+}
+
+.btn-reset {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid #555;
+  color: #aaa;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  font-family: var(--font);
+}
+.btn-reset:hover { border-color: #f4831f; color: #f4831f; }
+
+/* ── COULOIRS WRAPPER ── */
+.couloirs-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 14px 12px 20px;
+  height: calc(100dvh - var(--filter-h));
+  background: #333;
+}
+
+.couloirs-track {
+  display: flex;
+  gap: var(--couloir-gap);
+  align-items: stretch;
+  min-height: calc(100dvh - var(--filter-h) - 32px);
+  width: max-content;
+  position: relative;
+}
+
+/* ── COULOIR ── */
+.couloir {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  flex-shrink: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.couloir-num {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(3em - 6px);
+  aspect-ratio: 1;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 900;
+  color: #000;
+  pointer-events: none;
+  user-select: none;
+  z-index: 5;
+  line-height: 1;
+}
+
+.voies-container {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+}
+
+/* ── VOIE (barre colorée) ── */
+.voie {
+  flex: none;
+  width: var(--voie-w);
+  border-radius: var(--radius);
+  position: relative;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+  cursor: default;
+  overflow: visible;
+}
+
+.voie.filtered-out {
+  filter: grayscale(1);
+  opacity: 0.18;
+}
+
+/* Voie "blanc" → bordure visible */
+.voie.is-blanc {
+  box-shadow: inset 0 0 0 1px #999;
+}
+
+/* Voie réussie — badge ✓ en haut */
+.voie.is-completed::before {
+  content: '✓';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  background: #00cc55;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 900;
+  color: #000;
+  line-height: 14px;
+  text-align: center;
+  z-index: 3;
+  pointer-events: none;
+  border: 1px solid black;
+  padding-bottom: 2px;
+}
+
+/* Cotation — badge circulaire coloré par niveau */
+.voie-grade {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: rgba(0,0,0,0.8);
+  text-shadow: 0 0 2px rgba(255,255,255,0.8);
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+}
+
+/* Tooltip on hover */
+.voie[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111;
+  color: #eee;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  padding: 4px 7px;
+  border-radius: 4px;
+  border: 1px solid #444;
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* ── SCROLLBAR styling ── */
+.couloirs-wrapper::-webkit-scrollbar { height: 6px; }
+.couloirs-wrapper::-webkit-scrollbar-track { background: #111; }
+.couloirs-wrapper::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+
+/* ── LEGEND ── */
+.legend {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  :root { --voie-w: 18px; --couloir-gap: 22px; }
+}
+
+[x-cloak] { display: none !important; }
+
+/* ── POPIN ── */
+.popin-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(4px);
+}
+
+.popin-content {
+  background: #1a1a1a;
+  border-radius: 10px;
+  padding: 20px;
+  min-width: 80vw;
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow-y: auto;
+  color: #eee;
+  font-family: var(--font);
+  margin-top: 5vw;
+}
+
+.popin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.popin-close {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.popin-voie-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+}
+
+.popin-voie-pastille {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.popin-voie-info {
+  flex: 1;
+  font-size: 14px;
+}
+
+.popin-voie-cotation {
+  color: #aaa;
+  margin-right: 6px;
+}
+
+.popin-voie-check {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #00cc55;
+}

@@ -1,0 +1,158 @@
+{
+  "grades": [
+    "4a","4a+","4b","4b+","4c","4c+",
+    "5a","5a+","5b","5b+","5c","5c+",
+    "6a","6a+","6b","6b+","6c","6c+",
+    "7a","7a+","7b","7b+","7c"
+  ],
+  "couloirs": [
+    {
+      "id": 1,
+      "voies": [
+        { "couleur": "noir",  "couleur2": null, "ouvreur": "Pascal",   "cotation": "5c"  },
+        { "couleur": "rouge", "couleur2": null, "ouvreur": "Magali F", "cotation": "6a+" },
+        { "couleur": "vert",  "couleur2": null, "ouvreur": "Clotilde", "cotation": "6b"  }
+      ]
+    },
+    {
+      "id": 2,
+      "voies": [
+        { "couleur": "jaune", "couleur2": null, "ouvreur": "Jo", "cotation": "7c"  },
+        { "couleur": "rose",  "couleur2": null, "ouvreur": "Jo", "cotation": "6c"  }
+      ]
+    },
+    {
+      "id": 3,
+      "voies": [
+        { "couleur": "bleu",   "couleur2": null, "ouvreur": "Simon",   "cotation": "6c" },
+        { "couleur": "vert",   "couleur2": null, "ouvreur": "Antoine", "cotation": "6a" },
+        { "couleur": "orange", "couleur2": null, "ouvreur": "PMS",     "cotation": "7a" }
+      ]
+    },
+    {
+      "id": 4,
+      "voies": [
+        { "couleur": "jaune", "couleur2": null,     "ouvreur": "Pascal",  "cotation": "5b" },
+        { "couleur": "noir",  "couleur2": null,     "ouvreur": "Aurélie", "cotation": "6c" },
+        { "couleur": "noir",  "couleur2": "orange", "ouvreur": "Jo",      "cotation": "6c" }
+      ]
+    },
+    {
+      "id": 5,
+      "voies": [
+        { "couleur": "vert",  "couleur2": null, "ouvreur": "Ludo",     "cotation": "6b"  },
+        { "couleur": "blanc", "couleur2": null, "ouvreur": "Ludo",     "cotation": "7b+" },
+        { "couleur": "rose",  "couleur2": null, "ouvreur": "Magali F", "cotation": "5c+" }
+      ]
+    },
+    {
+      "id": 6,
+      "voies": [
+        { "couleur": "noir", "couleur2": "orange", "ouvreur": "Clotilde", "cotation": "5b"  },
+        { "couleur": "rose", "couleur2": null,      "ouvreur": "Romain",   "cotation": "6a+" }
+      ]
+    },
+    {
+      "id": 7,
+      "voies": [
+        { "couleur": "vert",   "couleur2": null, "ouvreur": "Christophe", "cotation": "6b+" },
+        { "couleur": "orange", "couleur2": null, "ouvreur": "Magali F",   "cotation": "5b"  },
+        { "couleur": "blanc",  "couleur2": null, "ouvreur": "Ludo",       "cotation": "6c"  }
+      ]
+    },
+    {
+      "id": 8,
+      "voies": [
+        { "couleur": "jaune",  "couleur2": null, "ouvreur": "Clotilde", "cotation": "6b" },
+        { "couleur": "violet", "couleur2": null, "ouvreur": "Myriam",   "cotation": "5b" }
+      ]
+    },
+    {
+      "id": 9,
+      "voies": [
+        { "couleur": "noir",   "couleur2": null, "ouvreur": "Ludo",            "cotation": "7b+" },
+        { "couleur": "vert",   "couleur2": null, "ouvreur": "Antoine",         "cotation": "6a"  },
+        { "couleur": "orange", "couleur2": null, "ouvreur": "Jean Christophe", "cotation": "6b+" }
+      ]
+    },
+    {
+      "id": 10,
+      "voies": [
+        { "couleur": "rose",  "couleur2": null, "ouvreur": "Magali F", "cotation": "5a"  },
+        { "couleur": "blanc", "couleur2": null, "ouvreur": "Clotilde", "cotation": "6b+" }
+      ]
+    },
+    {
+      "id": 11,
+      "voies": [
+        { "couleur": "jaune", "couleur2": null,     "ouvreur": "PMS",    "cotation": "6b+" },
+        { "couleur": "bleu",  "couleur2": null,     "ouvreur": "Pascal", "cotation": "6a+" },
+        { "couleur": "noir",  "couleur2": "orange", "ouvreur": "Arthur", "cotation": "6a+" }
+      ]
+    },
+    {
+      "id": 12,
+      "voies": [
+        { "couleur": "noir",   "couleur2": null, "ouvreur": "PMS",            "cotation": "6a+" },
+        { "couleur": "orange", "couleur2": null, "ouvreur": "Magali C",       "cotation": "5b"  },
+        { "couleur": "violet", "couleur2": null, "ouvreur": "Jean Christophe","cotation": "5b"  }
+      ]
+    },
+    {
+      "id": 13,
+      "voies": [
+        { "couleur": "vert",  "couleur2": null, "ouvreur": "Antoine", "cotation": "6b+" },
+        { "couleur": "blanc", "couleur2": null, "ouvreur": "Ludo",    "cotation": "6b"  },
+        { "couleur": "rose",  "couleur2": null, "ouvreur": "Magali",  "cotation": "6a+" }
+      ]
+    },
+    {
+      "id": 14,
+      "voies": [
+        { "couleur": "jaune", "couleur2": null, "ouvreur": "JC",         "cotation": "6c"  },
+        { "couleur": "bleu",  "couleur2": null, "ouvreur": "Christophe", "cotation": "5b+" },
+        { "couleur": "noir",  "couleur2": null, "ouvreur": "Pascal",     "cotation": "6b+" }
+      ]
+    },
+    {
+      "id": 15,
+      "voies": [
+        { "couleur": "bleu", "couleur2": "blanc", "ouvreur": "Pascal",  "cotation": "5a+" },
+        { "couleur": "rose", "couleur2": null,     "ouvreur": "Antoine", "cotation": "6a+" },
+        { "couleur": "vert", "couleur2": null,     "ouvreur": "Lionel",  "cotation": "6a"  }
+      ]
+    },
+    {
+      "id": 16,
+      "voies": [
+        { "couleur": "blanc", "couleur2": null,     "ouvreur": "Eliott", "cotation": "5c+" },
+        { "couleur": "noir",  "couleur2": "orange", "ouvreur": "Ludo",   "cotation": "4c"  },
+        { "couleur": "jaune", "couleur2": null,     "ouvreur": "Ludo",   "cotation": "7a"  }
+      ]
+    },
+    {
+      "id": 17,
+      "voies": [
+        { "couleur": "jaune", "couleur2": null,     "ouvreur": "Romain", "cotation": "5c"  },
+        { "couleur": "noir",  "couleur2": null,     "ouvreur": "JC",     "cotation": "5c"  },
+        { "couleur": "gris",  "couleur2": "violet", "ouvreur": "Romain", "cotation": "5c+" }
+      ]
+    },
+    {
+      "id": 18,
+      "voies": [
+        { "couleur": "bleu",   "couleur2": null, "ouvreur": "Magali F", "cotation": "5a"  },
+        { "couleur": "orange", "couleur2": null, "ouvreur": "Arthur",   "cotation": "4c"  },
+        { "couleur": "vert",   "couleur2": null, "ouvreur": "Magali F", "cotation": "5b+" }
+      ]
+    },
+    {
+      "id": 19,
+      "voies": [
+        { "couleur": "bleu",  "couleur2": null, "ouvreur": "Damien",  "cotation": "5b" },
+        { "couleur": "rose",  "couleur2": null, "ouvreur": "Ludo",    "cotation": "6b" },
+        { "couleur": "jaune", "couleur2": null, "ouvreur": "Charlie", "cotation": "6b" }
+      ]
+    }
+  ]
+}

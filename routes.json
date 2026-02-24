@@ -18,7 +18,8 @@
       "id": 2,
       "voies": [
         { "couleur": "jaune", "couleur2": null, "ouvreur": "Jo", "cotation": "7c"  },
-        { "couleur": "rose",  "couleur2": null, "ouvreur": "Jo", "cotation": "6c"  }
+        { "couleur": "rose",  "couleur2": null, "ouvreur": "Jo", "cotation": "6c"  },
+        { "couleur": "blanc",  "couleur2": null, "ouvreur": "Ludo", "cotation": "6a"  }
       ]
     },
     {
@@ -49,7 +50,8 @@
       "id": 6,
       "voies": [
         { "couleur": "noir", "couleur2": "orange", "ouvreur": "Clotilde", "cotation": "5b"  },
-        { "couleur": "rose", "couleur2": null,      "ouvreur": "Romain",   "cotation": "6a+" }
+        { "couleur": "rose", "couleur2": null,      "ouvreur": "Romain",   "cotation": "6a+" },
+        { "couleur": "jaune", "couleur2": null,      "ouvreur": "Ludo",   "cotation": "6c+" }
       ]
     },
     {
@@ -149,7 +151,7 @@
     {
       "id": 19,
       "voies": [
-        { "couleur": "bleu",  "couleur2": null, "ouvreur": "Damien",  "cotation": "5b" },
+        { "couleur": "bleu",  "couleur2": null, "ouvreur": "Damien",  "cotation": "4c+" },
         { "couleur": "rose",  "couleur2": null, "ouvreur": "Ludo",    "cotation": "6b" },
         { "couleur": "jaune", "couleur2": null, "ouvreur": "Charlie", "cotation": "6b" }
       ]

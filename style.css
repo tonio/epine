@@ -13,8 +13,8 @@
   --c-gris:   #b0b0b0;
 
   --filter-h: 52px;
-  --voie-w: 14px;
-  --couloir-gap: 18px;
+  --voie-w: 8px;
+  --couloir-gap: 20px;
   --radius: 5px;
   --font: system-ui, -apple-system, sans-serif;
 }
@@ -90,7 +90,7 @@ select:focus {
   -webkit-overflow-scrolling: touch;
   padding: 14px 12px 20px;
   height: calc(100dvh - var(--filter-h));
-  background: #333;
+  background: black;
 }
 
 .couloirs-track {
@@ -110,6 +110,9 @@ select:focus {
   flex-shrink: 0;
   position: relative;
   cursor: pointer;
+  background: #333;
+  padding: .5rem;
+  border-radius: .5rem;
 }
 
 .couloir-num {
@@ -137,7 +140,7 @@ select:focus {
   flex: 1;
   display: flex;
   flex-direction: row;
-  gap: 3px;
+  gap: 12px;
 }
 
 /* ── VOIE (barre colorée) ── */
@@ -179,8 +182,7 @@ select:focus {
   text-align: center;
   z-index: 3;
   pointer-events: none;
-  border: 1px solid black;
-  padding-bottom: 2px;
+  box-shadow: 0 0 2px black;
 }
 
 /* Cotation — badge circulaire coloré par niveau */
@@ -204,6 +206,12 @@ select:focus {
   user-select: none;
   z-index: 2;
 }
+
+/* Décalage vertical des marqueurs de difficulté (premier ↑, dernier ↓) */
+.voies-container .voie:first-of-type .voie-grade { top: 48%; }
+.voies-container .voie:last-of-type  .voie-grade { top: 52%; }
+/* Un seul marqueur dans le couloir → reste centré (spécificité supérieure) */
+.voies-container .voie:first-of-type:last-of-type .voie-grade { top: 50%; }
 
 /* Tooltip on hover */
 .voie[title]:hover::after {
